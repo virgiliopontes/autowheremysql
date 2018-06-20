@@ -22,9 +22,15 @@ class AutoWhereMysql{
         $valor = str_replace(',', '.', $valor);
 
         return $valor;
-
-    }
-
+	}
+	
+	/**
+	 * Retorna a a parte Where de uma consulta apartir dos arrays passados
+	 * @param array $campofiltro Tipo.~Campo no banco de dados
+	 * @param array $operadores Operadores do filtro
+	 * @param array $values Valores do filtro
+	 * @return string
+	 */
     function make_where($campofiltro,$operadores,$values){
 		if(is_array($values)){
 			//Limpa os dados para montar o WHERE
@@ -46,7 +52,12 @@ class AutoWhereMysql{
 
 			$campos = array();
 			foreach($values as $key=>$value){
-                $campotabela = explode('.~',$campofiltro[$key])[1];
+				$TipoeCampo = explode('.~',$campofiltro[$key]);
+				if(is_array($TipoeCampo)&&isset($TipoeCampo[1])){
+					$campotabela = $TipoeCampo[1];
+				}else{
+					echo "Certifiquesse de estar utilizando '.~' para separar o tipo e campo na base de dados";
+				}
                 $campoOperador = $campotabela.$operadores[$key];
 
 				if(!isset($campos[$campoOperador])){
@@ -67,8 +78,8 @@ class AutoWhereMysql{
                         $campos[$campoOperador][] .= $campoOperador."'".$value."' ";
                     }
 
-                }elseif(($operadores[$key]==">"||$operadores[$key]=="<"||$operadores[$key]=="<="||$operadores[$key]==">=")&&$value!='null'){
-                    $campos[$campoOperador][] .= $campoOperador."'".$value."' ";
+                }elseif(($operadores[$key]==">"||$operadores[$key]=="<"||$operadores[$key]=="<="||$operadores[$key]==">=")&&$value!='null'){	
+					$campos[$campoOperador][] .= $campoOperador." ".(is_numeric($value) ? $value : "'".$value."'" )." ";
                     
 				}elseif($operadores[$key]=="contem"){
                     $campos[$campoOperador][] .= $campotabela." LIKE '%".$value."%' ";
@@ -106,7 +117,7 @@ class AutoWhereMysql{
 			if(substr($where , -4)=='AND '){
 				$where  = substr($where ,0,-4);
 			}
-		
+			
 			return $where; 
 		}else{
 			return '';
