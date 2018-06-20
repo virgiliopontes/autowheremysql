@@ -1,0 +1,19 @@
+{
+    "name": "virgiliopontes/autowheremysql",
+    "description": "With this package, it's easy to create visions where your users become more powerful. You give them the power to filter fields all fields in a query, without the need to create each field separately. ",
+    "type": "library",
+    "keywords": ["filter","autofilter","mysql","autowhere"],
+    "homepage": "https://github.com/virgiliopontes/autowheremysql",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Virgilio Pontes",
+            "email": "virgiliocpntes@outlook.com",
+            "homepage": "http://virgiliocpontes.wordpress.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.4"
+    }
+}
