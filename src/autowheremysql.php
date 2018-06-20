@@ -76,7 +76,7 @@ class AutoWhereMysql{
 				}elseif($operadores[$key]=="entre"){
 					$valores = explode('~~',$value);
 					if(is_array($valores)){
-						$campos[$campoOperador][] .= $campotabela." BETWEEN '".$valores[0]."' AND '".$valores[1]."' ";
+						$campos[$campoOperador][] .= " (".$campotabela." BETWEEN '".$valores[0]."' AND '".$valores[1]."') ";
 					}
                     unset($valores);
                     
