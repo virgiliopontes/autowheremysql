@@ -3,7 +3,7 @@ namespace AutoWhere;
 
 class AutoWhereMysql{
     /**
-     * @param array $tipos Array com os tipos de campos que ele deve remover caracteres especiais
+     * @param array $tipos Array com os tipos de campos que ele deve remover caracteres especiais;
      */
     function __construct($tipos=''){
         if($tipos==''){
