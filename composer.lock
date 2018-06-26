@@ -1,0 +1,62 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "244feffae7722d7298adb6a6f635d115",
+    "packages": [
+        {
+            "name": "raelgc/template",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/raelgc/template.git",
+                "reference": "28ce6af12e1c49243a27167e84feb704b4ab5f5d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/raelgc/template/zipball/28ce6af12e1c49243a27167e84feb704b4ab5f5d",
+                "reference": "28ce6af12e1c49243a27167e84feb704b4ab5f5d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "raelgc\\": "raelgc"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.1-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Rael Gugelmin Cunha",
+                    "email": "rael.gc@gmail.com"
+                }
+            ],
+            "description": "PHP Template",
+            "homepage": "http://raelcunha.com/template/",
+            "keywords": [
+                "template"
+            ],
+            "time": "2018-04-24T20:53:45+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "raelgc/template": 20
+    },
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": {
+        "php": ">=5.4"
+    },
+    "platform-dev": []
+}

@@ -5,13 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Page Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-maskmoney/3.0.2/jquery.maskMoney.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/locales/bootstrap-datepicker.pt-BR.min.js"></script>
     <?php
         require_once(__DIR__.'/../src/autowheremysql.php');
         $autoWhereMysql = new AutoWhere\AutoWhereMysql();
@@ -116,99 +118,99 @@
     </div>
     </div>
     <script>
-    function excluird(dados){
-        $('#'+dados).html('');
-    }
-    cont = 0;
-    function adicionar(){
-        if($('#valorverf').val()!=''){
-            cont++;
-            var html  = '<tr id="regra'+cont+'">'+
-                            '<th><input type="hidden" name="campofiltro[]" value="'+$('#campos').val()+'"></input>'+$('#campos option:selected').html()+'</th>'+
-                            '<td><input type="hidden" name="operador[]" value="'+$('#opr').val()+'"></input>'+$('#opr').val()+'</td>'+
-                            '<td><input type="hidden" name="valorfiltro[]" value="'+$('#valorverf').val()+($('#valorverf2').val()!=''&&$('#valorverf2').val()!==undefined?'~~'+$('#valorverf2').val():'')+'"></input>'+$('#valorverf').val()+($('#valorverf2').val()!=''&&$('#valorverf2').val()!==undefined?' E '+$('#valorverf2').val():'')+'</td>'+
-                            '<td class="col-md-1"><a class="btn btn-danger btn-sm sweet-2" onclick="excluird(\'regra'+cont+'\')" data-original-title="Excluir">Remover</a></td>'+
-                        '</tr>';
-            ant = $('#tabeladados').html();
-            $('#tabeladados').html(html+ant);
-            $('#valorverf').val('');
-            if($('#valorverf2').val()!=''){
-                $('#valorverf2').val('');
+        function excluird(dados){
+            $('#'+dados).html('');
+        }
+        cont = 0;
+        function adicionar(){
+            if($('#valorverf').val()!=''){
+                cont++;
+                var html  = '<tr id="regra'+cont+'">'+
+                                '<th><input type="hidden" name="campofiltro[]" value="'+$('#campos').val()+'"></input>'+$('#campos option:selected').html()+'</th>'+
+                                '<td><input type="hidden" name="operador[]" value="'+$('#opr').val()+'"></input>'+$('#opr').val()+'</td>'+
+                                '<td><input type="hidden" name="valorfiltro[]" value="'+$('#valorverf').val()+($('#valorverf2').val()!=''&&$('#valorverf2').val()!==undefined?'~~'+$('#valorverf2').val():'')+'"></input>'+$('#valorverf').val()+($('#valorverf2').val()!=''&&$('#valorverf2').val()!==undefined?' E '+$('#valorverf2').val():'')+'</td>'+
+                                '<td class="col-md-1"><a class="btn btn-danger btn-sm sweet-2" onclick="excluird(\'regra'+cont+'\')" data-original-title="Excluir">Remover</a></td>'+
+                            '</tr>';
+                ant = $('#tabeladados').html();
+                $('#tabeladados').html(html+ant);
+                $('#valorverf').val('');
+                if($('#valorverf2').val()!=''){
+                    $('#valorverf2').val('');
+                }
+                maskcampo();
+            }else{
+                alert('O Campo Valor não pode estar vazio!');
+            }
+        
+        }
+
+        $('#campos').change(function() {
+            maskcampo();
+        });
+
+        function maskcampo(){
+            mask = $('#campos').val().split(".~");
+            switch(mask[0]) {
+                case 'texto':
+                    $('.valorverf').unmask();
+                    $(".valorverf").maskMoney('destroy');
+                    break;
+                case 'data':
+                    $(".valorverf").maskMoney('destroy');
+                    $('.valorverf').datepicker({
+                        language: 'pt-BR',
+                        format: 'dd/mm/yyyy',
+                        forceParse: false
+                    });
+                    $('.valorverf').mask('99/99/9999');
+                    break;
+                case 'moeda':
+                    $('.valorverf').unmask();
+                    $(".valorverf").maskMoney({prefix:'R$ ', thousands:'.', decimal:',', affixesStay: false});
+                    break;
+                case 'telefone':
+                    $(".valorverf").maskMoney('destroy');
+                    $('.valorverf').mask("(99) 9999-9999?9");
+                    break;
+                case 'cep':
+                    $(".valorverf").maskMoney('destroy');
+                    $(".valorverf").mask("99999-999");
+                    break;
+                case 'cnpj':
+                    $(".valorverf").maskMoney('destroy');
+                    $(".valorverf").mask("99.999.999/9999-99");
+                    break;
+                case 'cpf':
+                    $(".valorverf").maskMoney('destroy');
+                    $(".valorverf").mask("999.999.999-99");
+                    break;
+                default:
+                    $('.valorverf').unmask();
+                    $(".valorverf").maskMoney('destroy');   
+            }
+        }
+
+        $('#opr').change(function() {
+            mudarinput();
+            maskcampo();
+        });
+
+        function mudarinput(){
+            if($('#valorverf').val()!=''){
+                var value = $('#valorverf').val();
+            }else{
+                var value='';
+            }
+            switch($('#opr').val()) {
+                case 'entre':
+                    $('#inputvalorverf').html('<div class="row"><div class="col-md-6 col-xs-6"><label for="valorverf">Valor</label><input class="form-control valorverf" type="text" name="valorverf" id="valorverf" value=""></div><div class="col-md-6 col-xs-6"><label for="valorverf">Valor</label><input class="form-control valorverf" type="text" name="valorverf2" id="valorverf2" value=""></div></div>'); 
+                    break;
+                default:
+                    $('#inputvalorverf').html('<label for="valorverf">Valor</label><input class="form-control valorverf" type="text" name="valorverf" id="valorverf" value="">'); 
             }
             maskcampo();
-        }else{
-            alert('O Campo Valor não pode estar vazio!');
+            $('#valorverf').val(value);
         }
-    
-    }
-
-    $('#campos').change(function() {
-        maskcampo();
-    });
-
-    function maskcampo(){
-        mask = $('#campos').val().split(".~");
-        switch(mask[0]) {
-            case 'texto':
-                $('.valorverf').unmask();
-                $(".valorverf").maskMoney('destroy');
-                break;
-            case 'data':
-                $(".valorverf").maskMoney('destroy');
-                $('.valorverf').datepicker({
-                    language: 'pt-BR',
-                    format: 'dd/mm/yyyy',
-                    forceParse: false
-                });
-                $('.valorverf').mask('99/99/9999');
-                break;
-            case 'moeda':
-                $('.valorverf').unmask();
-                $(".valorverf").maskMoney({prefix:'R$ ', thousands:'.', decimal:',', affixesStay: false});
-                break;
-            case 'telefone':
-                $(".valorverf").maskMoney('destroy');
-                $('.valorverf').mask("(99) 9999-9999?9");
-                break;
-            case 'cep':
-                $(".valorverf").maskMoney('destroy');
-                $(".valorverf").mask("99999-999");
-                break;
-            case 'cnpj':
-                $(".valorverf").maskMoney('destroy');
-                $(".valorverf").mask("99.999.999/9999-99");
-                break;
-            case 'cpf':
-                $(".valorverf").maskMoney('destroy');
-                $(".valorverf").mask("999.999.999-99");
-                break;
-            default:
-                $('.valorverf').unmask();
-                $(".valorverf").maskMoney('destroy');   
-        }
-    }
-
-    $('#opr').change(function() {
-        mudarinput();
-        maskcampo();
-    });
-
-    function mudarinput(){
-        if($('#valorverf').val()!=''){
-            var value = $('#valorverf').val();
-        }else{
-            var value='';
-        }
-        switch($('#opr').val()) {
-            case 'entre':
-                $('#inputvalorverf').html('<div class="row"><div class="col-md-6 col-xs-6"><label for="valorverf">Valor</label><input class="form-control valorverf" type="text" name="valorverf" id="valorverf" value=""></div><div class="col-md-6 col-xs-6"><label for="valorverf">Valor</label><input class="form-control valorverf" type="text" name="valorverf2" id="valorverf2" value=""></div></div>'); 
-                break;
-            default:
-                $('#inputvalorverf').html('<label for="valorverf">Valor</label><input class="form-control valorverf" type="text" name="valorverf" id="valorverf" value="">'); 
-        }
-        maskcampo();
-        $('#valorverf').val(value);
-    }
     </script>
     
 </body>

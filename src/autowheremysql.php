@@ -1,16 +1,23 @@
 <?php
 namespace AutoWhere;
+use raelgc\view\Template;
 
 class AutoWhereMysql{
     /**
      * @param array $tipos Array com os tipos de campos que ele deve remover caracteres especiais;
      */
-    function __construct($tipos=''){
+    function __construct($tipos='',$view=false){
         if($tipos==''){
             $this->removermascaras = array("telefone","cnpj","cpf","rg","ie","cep");
         }else{
             $this->removermascaras = $tipos;
-        }
+		}
+		$view = $view===true ? __DIR__.'/view.html' : $view;
+		
+		if($view){
+			$this->tpl = new Template($view);
+		}
+		
     }
 
     function moedaParaNumero($valor)    {
@@ -22,6 +29,41 @@ class AutoWhereMysql{
         $valor = str_replace(',', '.', $valor);
 
         return $valor;
+	}
+
+	function set_params($params){
+		$this->params = $params;
+	}
+
+	function show_view(){
+		if(isset($this->tpl)){
+			$this->tpl->DESTINO = $this->params['destino'];
+			$this->tpl->METHOD = $this->params['method'];
+
+			foreach($this->params['filters'] as $key=>$value){
+				$this->tpl->CAMPO = $key;
+				$this->tpl->VALOR = $value;
+				$this->tpl->block("BLOCK_PARAMETROS");
+			}
+			$this->tpl->block("BLOCK_VIEW");
+			$this->tpl->show();		
+		}
+	}
+
+	function show_dependences(){
+		if(isset($this->tpl)){
+			if(isset($this->dependences)){
+
+			}else{
+				$this->tpl->block("BLOCK_CDNJSDEPENDENCES");
+			}
+
+			$this->tpl->show();		
+		}
+	}
+
+	function set_dependences($dependences){
+		$this->dependences = $dependences;
 	}
 	
 	/**
@@ -35,8 +77,8 @@ class AutoWhereMysql{
 		if(is_array($values)){
 			//Limpa os dados para montar o WHERE
 			foreach($values as $key=>$value){
-                $tipo = explode('.~',$campofiltro[$key]);
-				if(in_array($tipo,$this->removermascaras)){
+				$tipo = explode('.~',$campofiltro[$key]);
+				if(in_array($tipo[0],$this->removermascaras)){
 					$values[$key] = preg_replace('/[^a-z0-9~-~ç-Ç]/i', '', $value);
 				}elseif($tipo=="moeda"){
 					$values[$key] = $this->moedaParaNumero($value);
